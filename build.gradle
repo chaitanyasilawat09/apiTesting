@@ -85,7 +85,7 @@ task runTests(type: Test){
     useTestNG()
             {
                 systemProperty "baseUrl", findProperty("baseUrl")
-                suites 'src/test/resources/testng-suite.xml'
+                suites 'src/test/resources/testng-suite.xml.xml'
                 useDefaultListeners = true
                 testLogging {
                     events "passed", "skipped", "failed", "standardOut", "standardError"
@@ -133,7 +133,7 @@ task runTestsParallel(type: Test){
     useTestNG()
             {
                 systemProperty "baseUrl", findProperty("baseUrl")
-                suites 'src/test/resources/testng-suite-parallel.xml'
+                suites 'src/test/resources/testng-suite.xml.xml'
                 useDefaultListeners = true
                 testLogging {
                     events "passed", "skipped", "failed", "standardOut", "standardError"

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Regression" duration-ms="3978" started-at="2020-12-07T21:23:48 IST" finished-at="2020-12-07T21:23:52 IST">
+    <groups>
+    </groups>
+    <test name="RegressionTests" duration-ms="3978" started-at="2020-12-07T21:23:48 IST" finished-at="2020-12-07T21:23:52 IST">
+      <class name="AbcTests">
+        <test-method status="PASS" signature="test_1()[pri:0, instance:AbcTests@3ad58f31]" name="test_1" duration-ms="3266" started-at="2020-12-07T21:23:48 IST" finished-at="2020-12-07T21:23:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_1 -->
+        <test-method status="PASS" signature="test_2()[pri:0, instance:AbcTests@3ad58f31]" name="test_2" duration-ms="231" started-at="2020-12-07T21:23:52 IST" finished-at="2020-12-07T21:23:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_2 -->
+        <test-method status="PASS" signature="test_3()[pri:0, instance:AbcTests@3ad58f31]" name="test_3" duration-ms="195" started-at="2020-12-07T21:23:52 IST" finished-at="2020-12-07T21:23:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_3 -->
+        <test-method status="PASS" signature="test_4()[pri:0, instance:AbcTests@3ad58f31]" name="test_4" duration-ms="236" started-at="2020-12-07T21:23:52 IST" finished-at="2020-12-07T21:23:52 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_4 -->
+      </class> <!-- AbcTests -->
+    </test> <!-- RegressionTests -->
+  </suite> <!-- Regression -->
+</testng-results>

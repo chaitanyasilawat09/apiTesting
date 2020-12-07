@@ -4,18 +4,18 @@ def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
 def notify(status) {
-//     slackSend channel: "#lumeta-qa-builds",
-//             color: '#2eb886',
-//             message: "${status}",
-//             tokenCredentialId: '4963d7f4-a08d-496a-ae38-e7374c9b9bdb	'
+     slackSend channel: "#jenkinsbuilds",
+             color: '#2eb886',
+             message: "${status}",
+             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
 def trigg(String branchName) {
-    if (branchName.equals('master')) {
-        return '1 * * * *'
+    if (branchName.equals('main')) {
+        return '* 5 * * *'
     }
-    if (branchName.equals('masterTest')) {
-        return '07 1-23 * * *'
+    if (branchName.equals('master')) {
+        return '* 10 * * *'
     }
 }
 
@@ -56,18 +56,18 @@ pipeline {
             steps {
                 script {
                     if (branchName.equals("master")) {
-                        // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
-                        // sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        sh "gradle clean runTestsParallel"
+                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
+//                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
+                        sh "gradle clean test"
 
                     } else {
 
                         if (branchName.equals("masterTest")) {
-                            //    notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
-                            //sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
+                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
+//                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTestsParallel"
                         } else {
-                            // sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
+//                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
                             sh "gradle clean runTestsParallel"
                         }
                     }
@@ -88,8 +88,8 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                    //  slackSend color: "#FF0000", message: " Build completed and result:-"
-                    //  notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
+                      slackSend color: "#FF0000", message: " Build completed and result:-"
+//                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
             cleanWs notFailBuild: true
