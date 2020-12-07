@@ -1,5 +1,3 @@
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.TestGenerator
-
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
@@ -94,7 +92,7 @@ pipeline {
                                  reportTitles         : ''])
 
 
-                      slackSend color: "#FF0000", message: " Build completed and result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......."
+                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.result}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
 
