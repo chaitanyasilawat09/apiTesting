@@ -87,7 +87,7 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                      slackSend color: "#FF0000", message: " Build completed and result:- ",currentBuild.resul
+                      slackSend color: "#FF0000", message: " Build completed and result:- ",currentBuild.result
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
