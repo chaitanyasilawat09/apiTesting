@@ -3,35 +3,11 @@ def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
-
-def notifySlack(String buildStatus = 'STARTED') {
-    // Build status of null means success.
-    buildStatus = buildStatus ?: 'SUCCESS'
-
-    def color
-
-    if (buildStatus == 'STARTED') {
-        color = '#D4DADF'
-    } else if (buildStatus == 'SUCCESS') {
-        color = '#BDFFC3'
-    } else if (buildStatus == 'UNSTABLE') {
-        color = '#FFFE89'
-    } else {
-        color = '#FF9FA1'
-    }
-
-    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
-
-    slackSend(color: color, message: msg)
-}
-
-
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
              color: '#2eb886',
              message: "${status}",
-             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
-             notifySlack() "     "     notifySlack(currentBuild.result)
+             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
 def trigg(String branchName) {
@@ -80,17 +56,18 @@ pipeline {
             steps {
                 script {
                     if (branchName.equals("master")) {
-                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started  " )
+                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTestsParallel"
                     } else {
 
-                        if (branchName.equals("masterTest")) {
-                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
+                        if (branchName.equals("main")) {
+                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTestsParallel"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
+                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
                             sh "gradle clean runTestsParallel"
                         }
                     }
@@ -111,8 +88,7 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                      slackSend color: "#FF0000", message: " Build completed and result:-" ${currentBuild.result}   notifySlack(currentBuild.result)
-
+                     // slackSend color: "#FF0000", message: " Build completed and result:-" ${env.BUILD_URL},
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
