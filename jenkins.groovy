@@ -1,3 +1,7 @@
+import hudson.model.*
+import jenkins.model.*
+import hudson.tasks.test.AbstractTestResultAction
+
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
