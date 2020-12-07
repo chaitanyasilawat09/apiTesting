@@ -57,6 +57,7 @@ pipeline {
                 script {
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
+                        slackSend color: "#FF0000", message: " Build Started...:- "
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
 
@@ -64,10 +65,12 @@ pipeline {
 
                         if (branchName.equals("main")) {
                                 notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
+                            slackSend color: "#FF0000", message: " Build Started...:- "
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
-                            sh "gradle clean runTestsParallel"
+                            sh "gradle clean runTests"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
+                            slackSend color: "#FF0000", message: " Build Started...:- "
                             sh "gradle clean runTests"
                         }
                     }
