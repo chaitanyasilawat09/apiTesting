@@ -1,4 +1,4 @@
-mport hudson.tasks.test.AbstractTestResultAction
+import hudson.tasks.test.AbstractTestResultAction
 import hudson.model.Actionable
 
 
