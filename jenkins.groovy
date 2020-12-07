@@ -56,18 +56,18 @@ pipeline {
             steps {
                 script {
                     if (branchName.equals("master")) {
-                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
+                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        sh "gradle clean runTestsParallel"
+                        sh "gradle clean test"
+
                     } else {
 
-                        if (branchName.equals("main")) {
-                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
+                        if (branchName.equals("masterTest")) {
+                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTestsParallel"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
-                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
                             sh "gradle clean runTestsParallel"
                         }
                     }
@@ -88,8 +88,8 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                      slackSend color: "#FF0000", message: " Build completed and result:-" ${env.BUILD_URL}
-                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
+                      slackSend color: "#FF0000", message: " Build completed and result:-"
+//                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
             cleanWs notFailBuild: true
