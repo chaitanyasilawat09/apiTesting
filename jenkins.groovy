@@ -3,12 +3,24 @@ def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
+def summary = testng testResults: '/somefolder/*-reports/TEST-*.xml'
+
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
              color: '#2eb886',
-             message: "${status}",
              tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
+    message: "${status}    \n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}"
+
+
 }
+
+
+slackSends (
+        channel: "#jenkinsbuilds",
+        color: '#007D00',
+        tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
+        message: "\n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}"
+)
 
 def trigg(String branchName) {
     if (branchName.equals('main')) {
@@ -62,12 +74,12 @@ pipeline {
                     } else {
 
                         if (branchName.equals("main")) {
-                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
+                                //notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTestsParallel"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
-                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
+                           // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
                             sh "gradle clean runTestsParallel"
                         }
                     }
@@ -89,6 +101,8 @@ pipeline {
                                  reportTitles         : ''])
 
                      // slackSend color: "#FF0000", message: " Build completed and result:-" ${env.BUILD_URL},
+                    notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL} ${}
+
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
