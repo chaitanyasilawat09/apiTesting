@@ -56,18 +56,17 @@ pipeline {
             steps {
                 script {
                     if (branchName.equals("master")) {
-                        slackSend("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
+                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTestsParallel"
                     } else {
 
                         if (branchName.equals("masterTest")) {
-                            slackSend("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
+                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTestsParallel"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
-                            slackSend("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
                             sh "gradle clean runTestsParallel"
                         }
                     }
@@ -88,8 +87,8 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                      slackSend color: "#FF0000", message: " Build completed and result:-"
-                    slackSend("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
+                      slackSend color: "#FF0000", message: " Build completed and result:- ",currentBuild.resul
+                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
             cleanWs notFailBuild: true
