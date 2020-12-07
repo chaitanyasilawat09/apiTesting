@@ -94,7 +94,32 @@ pipeline {
                       slackSend color: "#FF0000", message: " Build completed and result:-  ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} "
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
-            }
+
+
+
+                AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+                if (testResultAction != null) {
+                    def totalNumberOfTests = testResultAction.totalCount
+                    def failedNumberOfTests = testResultAction.failCount
+                    def failedDiff = testResultAction.failureDiffString
+                    def skippedNumberOfTests = testResultAction.skipCount
+                    def passedNumberOfTests = totalNumberOfTests - failedNumberOfTests - skippedNumberOfTests
+                    emailTestReport = "Tests Report:\n Passed: ${passedNumberOfTests}; Failed: ${failedNumberOfTests} ${failedDiff}; Skipped: ${skippedNumberOfTests}  out of ${totalNumberOfTests} "
+                    slackSend = "Tests Report:\n Passed: ${passedNumberOfTests}; Failed: ${failedNumberOfTests} ${failedDiff}; Skipped: ${skippedNumberOfTests}  out of ${totalNumberOfTests} "
+
+                }
+
+
+            mail to: 'chaitanya.silawat911@gmail.com',
+                    subject: "Tests are finished: ${currentBuild.fullDisplayName}",
+                    body: "Tests are finished  ${env.BUILD_URL}\n  Test Report: ${emailTestReport} "
+
+
+
+
+
+
+        }
             cleanWs notFailBuild: true
         }
     }
