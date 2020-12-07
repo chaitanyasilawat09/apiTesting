@@ -24,12 +24,14 @@ def notifySlack(String buildStatus = 'STARTED') {
 
     slackSend(color: color, message: msg)
 }
+
+
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
              color: '#2eb886',
              message: "${status}",
-             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
-             notifySlack()
+             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
+             notifySlack() "     "     notifySlack(currentBuild.result)
 }
 
 def trigg(String branchName) {
@@ -78,7 +80,7 @@ pipeline {
             steps {
                 script {
                     if (branchName.equals("master")) {
-                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
+                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started  " )
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTestsParallel"
                     } else {
@@ -109,8 +111,8 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                      slackSend color: "#FF0000", message: " Build completed and result:-",
-                              notifySlack(),
+                      slackSend color: "#FF0000", message: " Build completed and result:-" ${currentBuild.result}   notifySlack(currentBuild.result)
+
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
