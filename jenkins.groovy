@@ -37,11 +37,11 @@ pipeline {
         stage('Configure') {  // build the box
             steps {
                 script {
-                    if (branchName.equals("master0")) {
+                    if (branchName.equals("master")) {
 //                         sh "chmod +x ./shFile/setups77.sh"
 //                         sh "./shFile/setups77.sh"
                     } else {
-                        if (branchName.equals("masterTest")) {
+                        if (branchName.equals("main")) {
 //                             sh "chmod +x ./shFile/setups65restore.sh"
 //                             sh "./shFile/setups65restore.sh"
                         } else {
@@ -92,7 +92,7 @@ pipeline {
                                  reportTitles         : ''])
 
 
-                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentBuild.currentResult}"
+                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
 
