@@ -58,8 +58,7 @@ pipeline {
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started")
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        sh "gradle clean test"
-
+                        sh "gradle clean runTestsParallel"
                     } else {
 
                         if (branchName.equals("masterTest")) {
@@ -79,7 +78,7 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
-                if (branchName.equals("masterTest") || branchName.equals("4.0")) {
+                if (branchName.equals("master") || branchName.equals("main")) {
                     publishHTML([allowMissing         : false,
                                  alwaysLinkToLastBuild: true,
                                  keepAll              : false,
@@ -89,7 +88,7 @@ pipeline {
                                  reportTitles         : ''])
 
                       slackSend color: "#FF0000", message: " Build completed and result:-"
-//                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
+                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
                 }
             }
             cleanWs notFailBuild: true
