@@ -3,24 +3,13 @@ def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
-def summary = '/somefolder/*-reports/TEST-*.xml'
 
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
              color: '#2eb886',
              tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
-    message: "${status}    \n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}"
-
-
 }
 
-
-slackSends (
-        channel: "#jenkinsbuilds",
-        color: '#007D00',
-        tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
-        message: "\n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Passed: ${summary.passCount}"
-)
 
 def trigg(String branchName) {
     if (branchName.equals('main')) {
@@ -66,6 +55,9 @@ pipeline {
         }
         stage('Build') {  // Compile and do unit testing
             steps {
+                slackSend color: "#FF0000", message: " Build completed and result:-" ${env.BUILD_URL}
+                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL} ${}
+
                 script {
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL}
@@ -100,10 +92,10 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                     // slackSend color: "#FF0000", message: " Build completed and result:-" ${env.BUILD_URL},
+                      slackSend color: "#FF0000", message: " Build completed and result:-" ${env.BUILD_URL}
                     notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started") ${env.BUILD_URL} ${}
 
-                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " + currentBuild.result)
+                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build " )
                 }
             }
             cleanWs notFailBuild: true
