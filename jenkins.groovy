@@ -1,10 +1,34 @@
-import hudson.tasks.test.AbstractTestResultAction
+mport hudson.tasks.test.AbstractTestResultAction
 import hudson.model.Actionable
+
 
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
+
+
+
+@NonCPS
+def getTestSummary = { ->
+    def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    def summary = ""
+
+    if (testResultAction != null) {
+        def total = testResultAction.getTotalCount()
+        def failed = testResultAction.getFailCount()
+        def skipped = testResultAction.getSkipCount()
+
+        summary = "Test results:\n\t"
+        summary = summary + ("Passed: " + (total - failed - skipped))
+        summary = summary + (", Failed: " + failed)
+        summary = summary + (", Skipped: " + skipped)
+    } else {
+        summary = "No tests found"
+    }
+    return summary
+}
+def testSummary = getTestSummary()
 
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
@@ -97,13 +121,9 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                      slackSend color: "#FF0000", message: " Build completed and result:-  ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} "
+                      slackSend  color: "#FF0000", message: " Build completed and result:-  ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} "
+                    slackSend testSummary()
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
-
-                    AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                    if (testResultAction != null) {
-                        echo "Tests: ${testResultAction.failCount} / ${testResultAction.failureDiffString} failures of ${testResultAction.totalCount}.\n\n"
-                    }
                 }
 
             }
