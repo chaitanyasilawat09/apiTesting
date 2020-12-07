@@ -1,34 +1,9 @@
-import hudson.tasks.test.AbstractTestResultAction
-import hudson.model.Actionable
-
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.TestGenerator
 
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
-
-
-
-@NonCPS
-def getTestSummary = { ->
-    def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    def summary = ""
-
-    if (testResultAction != null) {
-        def total = testResultAction.getTotalCount()
-        def failed = testResultAction.getFailCount()
-        def skipped = testResultAction.getSkipCount()
-
-        summary = "Test results:\n\t"
-        summary = summary + ("Passed: " + (total - failed - skipped))
-        summary = summary + (", Failed: " + failed)
-        summary = summary + (", Skipped: " + skipped)
-    } else {
-        summary = "No tests found"
-    }
-    return summary
-}
-def testSummary = getTestSummary()
 
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
@@ -121,8 +96,9 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                      slackSend  color: "#FF0000", message: " Build completed and result:-  ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} "
-                    slackSend testSummary()
+
+                      slackSend color: "#FF0000", message: " Build completed and result:- " +
+                              " ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ....... ${env.currentBuild.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
 
