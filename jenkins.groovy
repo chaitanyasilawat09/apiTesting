@@ -18,8 +18,8 @@ def notify(status) {
 slackSends (
         channel: "#jenkinsbuilds",
         color: '#007D00',
-        tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
-        message: "\n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}"
+        tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
+        message: "\n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Passed: ${summary.passCount}"
 )
 
 def trigg(String branchName) {
