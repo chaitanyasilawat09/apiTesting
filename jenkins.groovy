@@ -97,8 +97,7 @@ pipeline {
                                  reportTitles         : ''])
 
 
-                      slackSend color: "#FF0000", message: " Build completed and result:- " +
-                              " ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ....... ${env.currentBuild.currentResult}"
+                      slackSend color: "#FF0000", message: " Build completed and result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......."
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
 
