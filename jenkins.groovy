@@ -1,6 +1,5 @@
-import hudson.model.*
-import jenkins.model.*
 import hudson.tasks.test.AbstractTestResultAction
+import hudson.model.Actionable
 
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
@@ -13,6 +12,9 @@ def notify(status) {
              message: "${status}",
              tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
 }
+
+def testResult = build.testResultAction
+def total = testResult.totalCount
 
 def trigg(String branchName) {
     if (branchName.equals('main')) {
@@ -97,33 +99,14 @@ pipeline {
 
                       slackSend color: "#FF0000", message: " Build completed and result:-  ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} "
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
+
+                    AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+                    if (testResultAction != null) {
+                        echo "Tests: ${testResultAction.failCount} / ${testResultAction.failureDiffString} failures of ${testResultAction.totalCount}.\n\n"
+                    }
                 }
 
-
-
-                AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                if (testResultAction != null) {
-                    def totalNumberOfTests = testResultAction.totalCount
-                    def failedNumberOfTests = testResultAction.failCount
-                    def failedDiff = testResultAction.failureDiffString
-                    def skippedNumberOfTests = testResultAction.skipCount
-                    def passedNumberOfTests = totalNumberOfTests - failedNumberOfTests - skippedNumberOfTests
-                    emailTestReport = "Tests Report:\n Passed: ${passedNumberOfTests}; Failed: ${failedNumberOfTests} ${failedDiff}; Skipped: ${skippedNumberOfTests}  out of ${totalNumberOfTests} "
-                    slackSend = "Tests Report:\n Passed: ${passedNumberOfTests}; Failed: ${failedNumberOfTests} ${failedDiff}; Skipped: ${skippedNumberOfTests}  out of ${totalNumberOfTests} "
-
-                }
-
-
-            mail to: 'chaitanya.silawat911@gmail.com',
-                    subject: "Tests are finished: ${currentBuild.fullDisplayName}",
-                    body: "Tests are finished  ${env.BUILD_URL}\n  Test Report: ${emailTestReport} "
-
-
-
-
-
-
-        }
+            }
             cleanWs notFailBuild: true
         }
     }
