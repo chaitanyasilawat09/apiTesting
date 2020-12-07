@@ -12,9 +12,6 @@ def notify(status) {
              tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
-def testResult = build.testResultAction
-def total = testResult.totalCount
-
 def trigg(String branchName) {
     if (branchName.equals('main')) {
         return '* 5 * * *'
