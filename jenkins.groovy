@@ -94,7 +94,7 @@ pipeline {
                                  reportTitles         : ''])
 
                         slackSend testSummary +"   ........slackSend...."
-                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.rawBuild.getAction(AbstractTestResultAction.class)}.==============${env.currentResult}"
+                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.getUpstreamBuilds().get(0).getRawBuild().getAction(AbstractTestResultAction.class).toString}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
 
