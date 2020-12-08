@@ -91,7 +91,7 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-
+                    telegramSend ${env.JOB_NAME}
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
