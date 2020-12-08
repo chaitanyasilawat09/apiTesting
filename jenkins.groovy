@@ -1,28 +1,3 @@
-import hudson.tasks.test.AbstractTestResultAction
-import hudson.model.Actionable
-
-@NonCPS
-def getTestSummary = { ->
-    def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    def summary = ""
-
-    if (testResultAction != null) {
-        def total = testResultAction.getTotalCount()
-        def failed = testResultAction.getFailCount()
-        def skipped = testResultAction.getSkipCount()
-
-        summary = "Test results:\n\t"
-        summary = summary + ("Passed: " + (total - failed - skipped))
-        summary = summary + (", Failed: " + failed)
-        summary = summary + (", Skipped: " + skipped)
-    } else {
-        summary = "No tests found"
-    }
-    return summary
-}
-
-def testSummary = getTestSummary()
-
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
@@ -119,7 +94,7 @@ pipeline {
                                  reportTitles         : ''])
 
                         slackSend testSummary +"   ........slackSend...."
-                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
+                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.rawBuild.getAction(AbstractTestResultAction.class)}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
 
