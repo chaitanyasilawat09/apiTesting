@@ -92,8 +92,6 @@ pipeline {
                                  reportTitles         : ''])
 
 
-                    slackUploadFile channel: 'jenkinsbuilds', credentialId: '18db1418-2827-47bb-ad80-2b93b703cd72', filePath: 'build/reports/tests/runTestsParallel/index.html', initialComment: 'result'
-
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                      // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
