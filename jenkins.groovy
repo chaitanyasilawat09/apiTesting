@@ -3,7 +3,7 @@ def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
-def output = "Results: ${result.resultType} (${TestResult.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+def output = "Results: ${org.gradle.api.tasks.testing.TestResult.resultType} (${org.gradle.api.tasks.testing.TestResult.testCount} tests, ${org.gradle.api.tasks.testing.TestResult.successfulTestCount} passed, ${org.gradle.api.tasks.testing.TestResult.failedTestCount} failed, ${org.gradle.api.tasks.testing.TestResult.skippedTestCount} skipped)"
 
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
