@@ -1,3 +1,28 @@
+import hudson.tasks.test.AbstractTestResultAction
+import hudson.model.Actionable
+
+@NonCPS
+def getTestSummary = { ->
+    def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    def summary = ""
+
+    if (testResultAction != null) {
+        def total = testResultAction.getTotalCount()
+        def failed = testResultAction.getFailCount()
+        def skipped = testResultAction.getSkipCount()
+
+        summary = "Test results:\n\t"
+        summary = summary + ("Passed: " + (total - failed - skipped))
+        summary = summary + (", Failed: " + failed)
+        summary = summary + (", Skipped: " + skipped)
+    } else {
+        summary = "No tests found"
+    }
+    return summary
+}
+
+def testSummary = getTestSummary()
+
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
@@ -7,7 +32,8 @@ def notify(status) {
      slackSend channel: "#jenkinsbuilds",
              color: '#2eb886',
              message: "${status}",
-             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao'
+             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
+             token: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
 def trigg(String branchName) {
@@ -70,6 +96,7 @@ pipeline {
                             sh "gradle clean runTests"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
+                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
                             sh "gradle clean runTests"
                         }
@@ -91,7 +118,7 @@ pipeline {
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
 
-                    telegramSend "${env.JOB_NAME}"
+                        slackSend testSummary +"   ........slackSend...."
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
