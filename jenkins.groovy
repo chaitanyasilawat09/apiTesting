@@ -3,6 +3,8 @@ def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
+def output = "Results: ${result.resultType} (${TestResult.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
              color: '#2eb886',
@@ -92,7 +94,7 @@ pipeline {
                                  reportTitles         : ''])
 
 
-                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
+                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.====="+output+"=========${env.currentResult}"
                      // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
 
