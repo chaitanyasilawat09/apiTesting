@@ -11,6 +11,8 @@ def notify(status) {
              token: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
+
+
 def trigg(String branchName) {
     if (branchName.equals('main')) {
         return '* 5 * * *'
