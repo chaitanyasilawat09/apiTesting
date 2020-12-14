@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AbcTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-12-14T03:36:02" hostname="MACs-MacBook-Pro.local" time="5.35">
+  <properties/>
+  <testcase name="test_1" classname="AbcTests" time="4.596"/>
+  <testcase name="test_2" classname="AbcTests" time="0.28"/>
+  <testcase name="test_3" classname="AbcTests" time="0.249"/>
+  <testcase name="test_4" classname="AbcTests" time="0.207"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

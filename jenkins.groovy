@@ -11,8 +11,8 @@ def notify(status) {
 
 
 def trigg(String branchName) {
-    if (branchName.equals('main')) {
-        return '* 5 * * *'
+    if (branchName.equals('mergedBranch')) {
+        return '* 15 * * *'
     }
     if (branchName.equals('master')) {
         return '* 10 * * *'
@@ -41,7 +41,7 @@ pipeline {
 //                         sh "chmod +x ./shFile/setups77.sh"
 //                         sh "./shFile/setups77.sh"
                     } else {
-                        if (branchName.equals("main")) {
+                        if (branchName.equals("mergedBranch")) {
 //                             sh "chmod +x ./shFile/setups65restore.sh"
 //                             sh "./shFile/setups65restore.sh"
                         } else {
@@ -63,7 +63,7 @@ pipeline {
 
                     } else {
 
-                        if (branchName.equals("main")) {
+                        if (branchName.equals("mergedBranch")) {
                                 notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
@@ -83,7 +83,7 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
-                if (branchName.equals("master") || branchName.equals("main")) {
+                if (branchName.equals("master") || branchName.equals("mergedBranch")) {
 //                    publishHTML([allowMissing         : false,
 //                                 alwaysLinkToLastBuild: true,
 //                                 keepAll              : false,
