@@ -34,7 +34,7 @@ pipeline {
     }
 
     triggers {
-        cron(trigg(branchName))
+       // cron(trigg(branchName))
     }
     stages {
         stage('Configure') {  // build the box
