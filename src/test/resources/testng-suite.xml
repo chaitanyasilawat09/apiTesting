@@ -22,6 +22,7 @@
 <!--            <class name="AwsDeviceDetailsTest"></class>-->
 <!--            <class name="AzureDeviceDetailsTest"></class>-->
 <class name="AbcTests"></class>
+<class name="DefaultRequestSpecificationExample"></class>
 </classes>
 </test>
 

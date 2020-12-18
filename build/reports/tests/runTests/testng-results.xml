@@ -1,28 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+<testng-results ignored="0" total="4" passed="3" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Regression" duration-ms="5403" started-at="2020-12-14T09:06:02 IST" finished-at="2020-12-14T09:06:08 IST">
+  <suite started-at="2020-12-16T10:50:46 IST" name="Regression" finished-at="2020-12-16T10:50:54 IST" duration-ms="8244">
     <groups>
     </groups>
-    <test name="RegressionTests" duration-ms="5403" started-at="2020-12-14T09:06:02 IST" finished-at="2020-12-14T09:06:08 IST">
+    <test started-at="2020-12-16T10:50:46 IST" name="RegressionTests" finished-at="2020-12-16T10:50:54 IST" duration-ms="8244">
       <class name="AbcTests">
-        <test-method status="PASS" signature="test_1()[pri:0, instance:AbcTests@72ce0c67]" name="test_1" duration-ms="4596" started-at="2020-12-14T09:06:02 IST" finished-at="2020-12-14T09:06:07 IST">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- test_1 -->
-        <test-method status="PASS" signature="test_2()[pri:0, instance:AbcTests@72ce0c67]" name="test_2" duration-ms="280" started-at="2020-12-14T09:06:07 IST" finished-at="2020-12-14T09:06:07 IST">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- test_2 -->
-        <test-method status="PASS" signature="test_3()[pri:0, instance:AbcTests@72ce0c67]" name="test_3" duration-ms="249" started-at="2020-12-14T09:06:07 IST" finished-at="2020-12-14T09:06:08 IST">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- test_3 -->
-        <test-method status="PASS" signature="test_4()[pri:0, instance:AbcTests@72ce0c67]" name="test_4" duration-ms="207" started-at="2020-12-14T09:06:08 IST" finished-at="2020-12-14T09:06:08 IST">
+        <test-method signature="test_4()[pri:-1000, instance:AbcTests@1137b4eb]" started-at="2020-12-16T10:50:46 IST" name="test_4" finished-at="2020-12-16T10:50:53 IST" duration-ms="7478" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test_4 -->
+        <test-method signature="test_2()[pri:-100, instance:AbcTests@1137b4eb]" started-at="2020-12-16T10:50:53 IST" name="test_2" finished-at="2020-12-16T10:50:53 IST" duration-ms="272" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_2 -->
+        <test-method signature="test_3()[pri:-1, instance:AbcTests@1137b4eb]" started-at="2020-12-16T10:50:53 IST" name="test_3" finished-at="2020-12-16T10:50:54 IST" duration-ms="195" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_3 -->
+        <test-method signature="test_1()[pri:10, instance:AbcTests@1137b4eb]" started-at="2020-12-16T10:50:54 IST" name="test_1" finished-at="2020-12-16T10:50:54 IST" duration-ms="207" status="FAIL">
+          <exception class="java.lang.InterruptedException">
+            <message>
+              <![CDATA[sleep interrupted]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.InterruptedException: sleep interrupted
+at java.base/java.lang.Thread.sleep(Native Method)
+at AbcTests.test_1(AbcTests.java:11)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
+at org.testng.internal.InvokeMethodRunnable.runOne(InvokeMethodRunnable.java:51)
+at org.testng.internal.InvokeMethodRunnable.run(InvokeMethodRunnable.java:41)
+at org.testng.internal.MethodInvocationHelper.invokeWithTimeoutWithNoExecutor(MethodInvocationHelper.java:313)
+at org.testng.internal.MethodInvocationHelper.invokeWithTimeout(MethodInvocationHelper.java:279)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:590)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:172)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:804)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:145)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+at java.base/java.lang.Thread.run(Thread.java:832)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.InterruptedException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test_1 -->
       </class> <!-- AbcTests -->
     </test> <!-- RegressionTests -->
   </suite> <!-- Regression -->
