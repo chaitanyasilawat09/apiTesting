@@ -1,12 +1,34 @@
 import hudson.tasks.test.AbstractTestResultAction
 
-
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
-def summary = '/build/reports/tests/runTests/testng-results.xml'
+@NonCPS
+def getTestSummary = { ->
+    def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    def summary = ""
+
+    if (testResultAction != null) {
+        def total = testResultAction.getTotalCount()
+        def failed = testResultAction.getFailCount()
+        def skipped = testResultAction.getSkipCount()
+
+        summary = "Test results:\n\t"
+        summary = summary + ("Passed: " + (total - failed - skipped))
+        summary = summary + (", Failed: " + failed)
+        summary = summary + (", Skipped: " + skipped)
+    } else {
+        summary = "No tests found"
+    }
+    return summary
+}
+
+
+def testSummary = getTestSummary()
+
+
 
 @NonCPS
 def testStatuses() {
@@ -18,8 +40,7 @@ def testStatuses() {
         def skipped = testResultAction.skipCount
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-println testStatus+"....println"
-//slackSend color: "#FF0000",testStatus
+        //slackSend color: "#FF0000",testStatus
         if (failed == 0) {
             currentBuild.result = 'SUCCESS'
         }
@@ -132,10 +153,10 @@ pipeline {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
 
-                 //   slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
+                    slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
                     slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
-                    slackSend  message: "${test}"
-                    slackSend  message: "*Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}"
+                    slackSend color: "#FF0000", message: " post is 1testSummary,,test.....  "+ testSummary
+                    slackSend  message: "${testSummary}>>>>>>>>>>>>>>>>0"
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
