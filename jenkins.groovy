@@ -12,9 +12,13 @@ def testStatuses() {
     def testStatus = ""
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null) {
-        def total = testResultAction.totalCount
-        def failed = testResultAction.failCount
-        def skipped = testResultAction.skipCount
+//        def total = testResultAction.totalCount
+//        def failed = testResultAction.failCount
+//        def skipped = testResultAction.skipCount
+        def total = testResultAction.getTotalCount()
+        def failed = testResultAction.getFailCount()
+        def skipped = testResultAction.getSkipCount()
+
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
 println testStatus+"....println"
@@ -112,7 +116,7 @@ pipeline {
     }
     post {
         always {
-            step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
+            step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTests/testng-results.xml'])
             script {
                 slackSend  message: "${test}"
                // slackSend testStatuses()
@@ -120,7 +124,7 @@ pipeline {
                     publishHTML([allowMissing         : false,
                                  alwaysLinkToLastBuild: true,
                                  keepAll              : false,
-                                 reportDir            : 'build/reports/tests/runTestsParallel/',
+                                 reportDir            : 'build/reports/tests/runTests/',
                                  reportFiles          : 'index.html',
                                  reportName           : 'HTML Report',
                                  reportTitles         : ''])
