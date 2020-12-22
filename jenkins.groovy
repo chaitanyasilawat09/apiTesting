@@ -132,7 +132,7 @@ pipeline {
 //                    }
 
                     slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
-                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()+"......."
+                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
                     slackSend  message: "${test}"
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
