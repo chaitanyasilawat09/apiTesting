@@ -137,6 +137,7 @@ pipeline {
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
 
+
             }
             cleanWs notFailBuild: true
         }
