@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AbcTests" tests="5" skipped="0" failures="1" errors="0" timestamp="2020-12-22T11:44:52" hostname="MACs-MacBook-Pro.local" time="5.714">
+<testsuite name="AbcTests" tests="5" skipped="0" failures="1" errors="0" timestamp="2020-12-22T12:49:51" hostname="MACs-MacBook-Pro.local" time="4.992">
   <properties/>
-  <testcase name="test_4" classname="AbcTests" time="4.573"/>
+  <testcase name="test_4" classname="AbcTests" time="4.344"/>
   <testcase name="test_5" classname="AbcTests" time="0.001">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;io.restassured.specification.RequestSpecification.with()&quot; because &quot;this.requestSpecification&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;io.restassured.specification.RequestSpecification.with()&quot; because &quot;this.requestSpecification&quot; is null
 	at AbcTests.test_5(AbcTests.java:44)
@@ -22,9 +22,9 @@
 	at java.base/java.lang.Thread.run(Thread.java:832)
 </failure>
   </testcase>
-  <testcase name="test_2" classname="AbcTests" time="0.476"/>
-  <testcase name="test_3" classname="AbcTests" time="0.26"/>
-  <testcase name="test_1" classname="AbcTests" time="0.375"/>
+  <testcase name="test_2" classname="AbcTests" time="0.23"/>
+  <testcase name="test_3" classname="AbcTests" time="0.194"/>
+  <testcase name="test_1" classname="AbcTests" time="0.216"/>
   <system-out><![CDATA[{"page":2,"per_page":6,"total":12,"total_pages":2,"data":[{"id":7,"email":"michael.lawson@reqres.in","first_name":"Michael","last_name":"Lawson","avatar":"https://reqres.in/img/faces/7-image.jpg"},{"id":8,"email":"lindsay.ferguson@reqres.in","first_name":"Lindsay","last_name":"Ferguson","avatar":"https://reqres.in/img/faces/8-image.jpg"},{"id":9,"email":"tobias.funke@reqres.in","first_name":"Tobias","last_name":"Funke","avatar":"https://reqres.in/img/faces/9-image.jpg"},{"id":10,"email":"byron.fields@reqres.in","first_name":"Byron","last_name":"Fields","avatar":"https://reqres.in/img/faces/10-image.jpg"},{"id":11,"email":"george.edwards@reqres.in","first_name":"George","last_name":"Edwards","avatar":"https://reqres.in/img/faces/11-image.jpg"},{"id":12,"email":"rachel.howell@reqres.in","first_name":"Rachel","last_name":"Howell","avatar":"https://reqres.in/img/faces/12-image.jpg"}],"support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}}
 [7, 8, 9, 10, 11, 12]
 ]]></system-out>

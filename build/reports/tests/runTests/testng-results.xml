@@ -2,16 +2,16 @@
 <testng-results ignored="0" total="7" passed="6" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-12-22T17:14:52 IST" name="Regression" finished-at="2020-12-22T17:15:03 IST" duration-ms="11065">
+  <suite started-at="2020-12-22T18:19:51 IST" name="Regression" finished-at="2020-12-22T18:20:01 IST" duration-ms="9749">
     <groups>
     </groups>
-    <test started-at="2020-12-22T17:14:52 IST" name="RegressionTests" finished-at="2020-12-22T17:15:03 IST" duration-ms="11065">
+    <test started-at="2020-12-22T18:19:51 IST" name="RegressionTests" finished-at="2020-12-22T18:20:01 IST" duration-ms="9749">
       <class name="AbcTests">
-        <test-method signature="test_4()[pri:-1000, instance:AbcTests@10283938]" started-at="2020-12-22T17:14:52 IST" name="test_4" finished-at="2020-12-22T17:14:56 IST" duration-ms="4573" status="PASS">
+        <test-method signature="test_4()[pri:-1000, instance:AbcTests@10283938]" started-at="2020-12-22T18:19:51 IST" name="test_4" finished-at="2020-12-22T18:19:55 IST" duration-ms="4344" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test_4 -->
-        <test-method signature="test_5()[pri:-1000, instance:AbcTests@10283938]" started-at="2020-12-22T17:14:56 IST" name="test_5" finished-at="2020-12-22T17:14:56 IST" duration-ms="1" status="FAIL">
+        <test-method signature="test_5()[pri:-1000, instance:AbcTests@10283938]" started-at="2020-12-22T18:19:55 IST" name="test_5" finished-at="2020-12-22T18:19:55 IST" duration-ms="1" status="FAIL">
           <exception class="java.lang.NullPointerException">
             <message>
               <![CDATA[Cannot invoke "io.restassured.specification.RequestSpecification.with()" because "this.requestSpecification" is null]]>
@@ -40,29 +40,29 @@ at java.base/java.lang.Thread.run(Thread.java:832)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test_5 -->
-        <test-method signature="test_2()[pri:-100, instance:AbcTests@10283938]" started-at="2020-12-22T17:14:56 IST" name="test_2" finished-at="2020-12-22T17:14:57 IST" duration-ms="476" status="PASS">
+        <test-method signature="test_2()[pri:-100, instance:AbcTests@10283938]" started-at="2020-12-22T18:19:55 IST" name="test_2" finished-at="2020-12-22T18:19:56 IST" duration-ms="230" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test_2 -->
-        <test-method signature="test_3()[pri:-1, instance:AbcTests@10283938]" started-at="2020-12-22T17:14:57 IST" name="test_3" finished-at="2020-12-22T17:14:57 IST" duration-ms="260" status="PASS">
+        <test-method signature="test_3()[pri:-1, instance:AbcTests@10283938]" started-at="2020-12-22T18:19:56 IST" name="test_3" finished-at="2020-12-22T18:19:56 IST" duration-ms="194" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test_3 -->
-        <test-method signature="test_1()[pri:10, instance:AbcTests@10283938]" started-at="2020-12-22T17:14:57 IST" name="test_1" finished-at="2020-12-22T17:14:58 IST" duration-ms="375" status="PASS">
+        <test-method signature="test_1()[pri:10, instance:AbcTests@10283938]" started-at="2020-12-22T18:19:56 IST" name="test_1" finished-at="2020-12-22T18:19:56 IST" duration-ms="216" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test_1 -->
       </class> <!-- AbcTests -->
       <class name="DefaultRequestSpecificationExample">
-        <test-method is-config="true" signature="setupDefaultRequestSpecification()[pri:0, instance:DefaultRequestSpecificationExample@1852bf69]" started-at="2020-12-22T17:14:58 IST" name="setupDefaultRequestSpecification" finished-at="2020-12-22T17:14:58 IST" duration-ms="2" status="PASS">
+        <test-method is-config="true" signature="setupDefaultRequestSpecification()[pri:0, instance:DefaultRequestSpecificationExample@1852bf69]" started-at="2020-12-22T18:19:56 IST" name="setupDefaultRequestSpecification" finished-at="2020-12-22T18:19:56 IST" duration-ms="2" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setupDefaultRequestSpecification -->
-        <test-method signature="overrideDefaultRequestSpecification()[pri:0, instance:DefaultRequestSpecificationExample@1852bf69]" started-at="2020-12-22T17:14:58 IST" name="overrideDefaultRequestSpecification" finished-at="2020-12-22T17:15:02 IST" duration-ms="4057" status="PASS">
+        <test-method signature="overrideDefaultRequestSpecification()[pri:0, instance:DefaultRequestSpecificationExample@1852bf69]" started-at="2020-12-22T18:19:56 IST" name="overrideDefaultRequestSpecification" finished-at="2020-12-22T18:20:00 IST" duration-ms="3517" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- overrideDefaultRequestSpecification -->
-        <test-method signature="useDefaultRequestSpecification()[pri:0, instance:DefaultRequestSpecificationExample@1852bf69]" started-at="2020-12-22T17:15:02 IST" name="useDefaultRequestSpecification" finished-at="2020-12-22T17:15:03 IST" duration-ms="1228" status="PASS">
+        <test-method signature="useDefaultRequestSpecification()[pri:0, instance:DefaultRequestSpecificationExample@1852bf69]" started-at="2020-12-22T18:20:00 IST" name="useDefaultRequestSpecification" finished-at="2020-12-22T18:20:01 IST" duration-ms="1183" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- useDefaultRequestSpecification -->
