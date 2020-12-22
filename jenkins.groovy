@@ -23,7 +23,7 @@ def trigg(String branchName) {
     }
 }
 
-pipeline {
+node {
     agent any
 
     options {
