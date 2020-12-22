@@ -124,14 +124,14 @@ pipeline {
             script {
                // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
-                    publishHTML([allowMissing         : false,
-                                 alwaysLinkToLastBuild: true,
-                                 keepAll              : false,
-                                 reportDir            : 'build/reports/tests/runTestsParallel/',
-                                 reportFiles          : 'index.html',
-                                 reportName           : 'HTML Report',
-                                 reportTitles         : ''])
-
+//                    publishHTML([allowMissing         : false,
+//                                 alwaysLinkToLastBuild: true,
+//                                 keepAll              : false,
+//                                 reportDir            : 'build/reports/tests/runTestsParallel/',
+//                                 reportFiles          : 'index.html',
+//                                 reportName           : 'HTML Report',
+//                                 reportTitles         : ''])
+//
 
 //                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
 //                    if (testResult1 != null) {
@@ -139,7 +139,6 @@ pipeline {
 //                    }
 
                     //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
-                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
                     slackSend color: "#FF0000", message: " post is final call,,,test....${test}.  "
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
