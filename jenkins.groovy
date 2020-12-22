@@ -55,7 +55,7 @@ def notify(status) {
     slackSend channel: "#jenkinsbuilds",
             color: '#2eb886',
             message: "${status}",
-            mess: testStatuses(),
+            mess: "${test}",
             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
             token: 'umkdE5giXctXeuyJD0c4PQao'
 }
@@ -154,7 +154,7 @@ pipeline {
 //                    }
 
                     //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
-                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
+                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().length()
                     slackSend color: "#FF0000", message: " post is 1testSummary,,test.....  "+ testSummary
                     slackSend  message: "${testSummary}>>>>>>>>>>>>>>>>0"
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
