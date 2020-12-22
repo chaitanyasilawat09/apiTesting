@@ -80,6 +80,22 @@ pipeline {
             steps {
                 script {
                     if (branchName.equals("master")) {
+
+                        AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+                        if (testResultAction != null) {
+                            def total = testResultAction.totalCount
+                            def failed = testResultAction.failCount
+                            def skipped = testResultAction.skipCount
+                            def passed = total - failed - skipped
+                            testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+                            slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+                            if (failed == 0) {
+                                currentBuild.result = 'SUCCESS'
+                                slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+                            }
+                        }
+
+
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
                     //    slackSend testStatuses()
