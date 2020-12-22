@@ -12,8 +12,6 @@ def summary = '/build/reports/tests/runTests/testng-results.xml'
 def testStatuses() {
     def testStatus = ""
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    echo "Tests: ${testResultAction.failCount} / ${testResultAction.failureDiffString} failures of ${testResultAction.totalCount}.\n\n"
-
     if (testResultAction != null) {
         def total = testResultAction.totalCount
         def failed = testResultAction.failCount
