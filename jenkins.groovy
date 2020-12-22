@@ -153,7 +153,7 @@ pipeline {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
 
-                    slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
+                    //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
                     slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
                     slackSend color: "#FF0000", message: " post is 1testSummary,,test.....  "+ testSummary
                     slackSend  message: "${testSummary}>>>>>>>>>>>>>>>>0"
