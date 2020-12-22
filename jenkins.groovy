@@ -12,13 +12,9 @@ def testStatuses() {
     def testStatus = ""
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null) {
-//        def total = testResultAction.totalCount
-//        def failed = testResultAction.failCount
-//        def skipped = testResultAction.skipCount
-        def total = testResultAction.getTotalCount()
-        def failed = testResultAction.getFailCount()
-        def skipped = testResultAction.getSkipCount()
-
+        def total = testResultAction.totalCount
+        def failed = testResultAction.failCount
+        def skipped = testResultAction.skipCount
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
 println testStatus+"....println"
