@@ -15,10 +15,10 @@ def notify(status) {
 
 def trigg(String branchName) {
     if (branchName.equals('main')) {
-        return '* 5 * * *'
+        return '5 5 * * *'
     }
     if (branchName.equals('master')) {
-        return '* 10 * * *'
+        return '4 10 * * *'
     }
 }
 
@@ -34,7 +34,7 @@ pipeline {
     }
 
     triggers {
-       // cron(trigg(branchName))
+        cron(trigg(branchName))
     }
     stages {
         stage('Configure') {  // build the box
