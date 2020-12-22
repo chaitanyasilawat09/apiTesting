@@ -17,13 +17,13 @@ def testStatuses() {
         def skipped = testResultAction.skipCount
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-slackSend color: "#FF0000",testStatus
+//slackSend color: "#FF0000",testStatus
         if (failed == 0) {
             currentBuild.result = 'SUCCESS'
         }
     }
     else {
-        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty "
+        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty "+echo testStatus
     }
     return testStatus
 }
@@ -85,7 +85,7 @@ pipeline {
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
-                        slackSend testStatuses()
+                       // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
 
