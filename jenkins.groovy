@@ -1,3 +1,5 @@
+#!groovy
+
 import hudson.tasks.test.AbstractTestResultAction
 
 def branchName = env.BRANCH_NAME
@@ -5,35 +7,12 @@ def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
-@NonCPS
-def getTestStatuses(currentBuild) {
-    final AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    if (testResultAction != null) {
-        this.total = testResultAction.totalCount
-        this.failed = testResultAction.failCount
-        this.skipped = testResultAction.skipCount
-        this.passed = total - failed - skipped
-    }
-}
-
-def buildUnitTestSlackNotificationMessage() {
-    final JSONObject unitTestResult = new JSONObject()
-    unitTestResult.put("fallback", this.jenkinsEnvironment.JOB_NAME + "with build#" + this.jenkinsEnvironment.BUILD_NUMBER + "finish with unit test result : Passed: " + this.passed + " | Failed: " + this.failed + " | Skipped: " + this.skipped )
-    unitTestResult.put("color", this.getUnitTestReportColor())
-    unitTestResult.put("pretext", "Message from CI job: " + this.jenkinsEnvironment.JOB_NAME + "#" + this.jenkinsEnvironment.BUILD_NUMBER)
-    unitTestResult.put("title", "BuildLog")
-    unitTestResult.put("title_link", "<<<JenkinsHost>>>" + this.jenkinsEnvironment.JOB_NAME + "/" + this.jenkinsEnvironment.BUILD_NUMBER  + "/console")
-    unitTestResult.put("text", "Passed: " + this.passed +  " | Failed: " + this.failed + " | Skipped: " + this.skipped)
-    unitTestResult.put("image_url", this.getLogoURL())
-    this.attachments.add(unitTestResult)
-    return this.attachments.toString()
-}
 
 
 @NonCPS
 def testStatuses() {
     def testStatus = ""
-    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null) {
         def total = testResultAction.totalCount
         def failed = testResultAction.failCount
@@ -55,7 +34,7 @@ def notify(status) {
     slackSend channel: "#jenkinsbuilds",
             color: '#2eb886',
             message: "${status}",
-            attachments: " ",
+            mess: "${test}",
             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
             token: 'umkdE5giXctXeuyJD0c4PQao'
 }
@@ -105,35 +84,14 @@ pipeline {
         stage('Build') {  // Compile and do unit testing
             steps {
                 script {
+                    step $class: 'JUnitResultArchiver', testResults: '**/TEST-*.xml'
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-
-
-
-                        def slackHelper = new com.xyz.jenkins.libraries.SlackNotifier(env)
-                        try {
-                            sh "gradle clean runTests"
-                        } finally {
-                           // junit 'build/test-results/test/*.xml'
-                            junit 'build/reports/tests/runTests/junitreports/*.xml'
-                            AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-
-                            slackHelper.getTestStatuses(currentBuild)
-
-                            slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
-                            slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+slackHelper.buildUnitTestSlackNotificationMessage()
-                            slackSend( attachments: slackHelper.buildUnitTestSlackNotificationMessage())
-                        }
-
-
-
-
-
-
-
+                        sh "gradle clean runTests"
+                        slackSend color: "#FF0000", message: " post is final call in master branch sh ,,,test.....  "+ ${test}
                     } else {
 
                         if (branchName.equals("main")) {
@@ -148,8 +106,6 @@ pipeline {
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
                             sh "gradle clean runTests"
-
-
                         }
                     }
                 }
@@ -178,6 +134,7 @@ pipeline {
 
                     //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
                     slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
+                    slackSend color: "#FF0000", message: " post is final call,,,test.....  "+ ${test}
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
