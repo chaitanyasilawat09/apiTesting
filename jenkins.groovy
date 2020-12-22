@@ -14,23 +14,23 @@ def notify(status) {
              token: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
-@NonCPS
-def testStatuses() {
-    def testStatus = ""
-    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    if (testResultAction != null) {
-        def total = testResultAction.totalCount
-        def failed = testResultAction.failCount
-        def skipped = testResultAction.skipCount
-        def passed = total - failed - skipped
-        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-
-        if (failed == 0) {
-            currentBuild.result = 'SUCCESS'
-        }
-    }
-    return testStatus
-}
+//@NonCPS
+//def testStatuses() {
+//    def testStatus = ""
+//    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+//    if (testResultAction != null) {
+//        def total = testResultAction.totalCount
+//        def failed = testResultAction.failCount
+//        def skipped = testResultAction.skipCount
+//        def passed = total - failed - skipped
+//        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+//
+//        if (failed == 0) {
+//            currentBuild.result = 'SUCCESS'
+//        }
+//    }
+//    return testStatus
+//}
 
 
 
@@ -82,7 +82,7 @@ pipeline {
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
-                        slackSend testStatuses()
+                    //    slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
 
@@ -108,7 +108,7 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
-                slackSend testStatuses()
+               // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
 //                    publishHTML([allowMissing         : false,
 //                                 alwaysLinkToLastBuild: true,
@@ -123,6 +123,21 @@ pipeline {
 //                    if (testResult1 != null) {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
+
+
+                    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+                    if (testResultAction != null) {
+                        def total = testResultAction.totalCount
+                        def failed = testResultAction.failCount
+                        def skipped = testResultAction.skipCount
+                        def passed = total - failed - skipped
+                        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+                        slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+                        if (failed == 0) {
+                            currentBuild.result = 'SUCCESS'
+                            slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+                        }
+                    }
 
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
