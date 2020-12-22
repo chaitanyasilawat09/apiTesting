@@ -32,7 +32,7 @@ def notify(status) {
     slackSend channel: "#jenkinsbuilds",
             color: '#2eb886',
             message: "${status}",
-            testStatuses(),
+            mess: testStatuses(),
             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
             token: 'umkdE5giXctXeuyJD0c4PQao'
 }
