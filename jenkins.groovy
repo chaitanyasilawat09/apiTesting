@@ -111,7 +111,7 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
-                slackSend testStatuses()
+               // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
 //                    publishHTML([allowMissing         : false,
 //                                 alwaysLinkToLastBuild: true,
