@@ -1,6 +1,2 @@
-Employee.java
- Employee
-Java11_Var_Variable.java
- Java11_Var_Variable
 ApplicationProperties.java
  ApplicationProperties
