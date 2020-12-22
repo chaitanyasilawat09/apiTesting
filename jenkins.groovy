@@ -25,6 +25,8 @@ def trigg(String branchName) {
     }
 }
 
+
+
 pipeline {
     agent any
 
