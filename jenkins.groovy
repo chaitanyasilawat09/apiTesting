@@ -1,3 +1,6 @@
+import hudson.tasks.test.AbstractTestResultAction
+
+
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
@@ -11,6 +14,26 @@ def notify(status) {
              token: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
+@NonCPS
+def testStatuses() {
+    def testStatus = ""
+    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+    if (testResultAction != null) {
+        def total = testResultAction.totalCount
+        def failed = testResultAction.failCount
+        def skipped = testResultAction.skipCount
+        def passed = total - failed - skipped
+        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+
+        if (failed == 0) {
+            currentBuild.result = 'SUCCESS'
+        }
+    }
+    return testStatus
+}
+
+
+
 def trigg(String branchName) {
     if (branchName.equals('main')) {
         return '5 5 * * *'
@@ -19,8 +42,6 @@ def trigg(String branchName) {
         return '4 10 * * *'
     }
 }
-
-
 
 pipeline {
     agent any
@@ -58,15 +79,10 @@ pipeline {
         stage('Build') {  // Compile and do unit testing
             steps {
                 script {
-                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                    if (testResult1 != null) {
-                        slackSend "Tests123456: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
-                    }
-                    slackSend "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
-
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
+                        slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
 
@@ -92,6 +108,7 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
+                slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
 //                    publishHTML([allowMissing         : false,
 //                                 alwaysLinkToLastBuild: true,
