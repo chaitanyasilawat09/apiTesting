@@ -85,7 +85,6 @@ pipeline {
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
-                        slackSend  message: "${test}"
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
@@ -95,14 +94,14 @@ pipeline {
                         if (branchName.equals("main")) {
                                 notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
-                            slackSend  message: "${test}"
+
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTests"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
                             notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
-                            slackSend  message: "${test}"
+
                             sh "gradle clean runTests"
                         }
                     }
@@ -131,7 +130,8 @@ pipeline {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
 
-                    slackSend color: "#FF0000", message: " AbstractTestResultAction result is 12343empty ,,,test.....  "+ test"......."
+                    slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
+                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()+"......."
                     slackSend  message: "${test}"
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
