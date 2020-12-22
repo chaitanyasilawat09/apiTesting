@@ -6,33 +6,33 @@ def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
-def notify(status) {
-     slackSend channel: "#jenkinsbuilds",
-             color: '#2eb886',
-             message: "${status}",
-             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
-             token: 'umkdE5giXctXeuyJD0c4PQao'
+
+
+def testStatuses() {
+    def testStatus = ""
+    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+   // if (testResultAction != null) {
+        def total = testResultAction.totalCount
+        def failed = testResultAction.failCount
+        def skipped = testResultAction.skipCount
+        def passed = total - failed - skipped
+        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+
+        if (failed == 0) {
+            currentBuild.result = 'SUCCESS'
+        }
+  //  }
+    return testStatus
 }
 
-//@NonCPS
-//def testStatuses() {
-//    def testStatus = ""
-//    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-//    if (testResultAction != null) {
-//        def total = testResultAction.totalCount
-//        def failed = testResultAction.failCount
-//        def skipped = testResultAction.skipCount
-//        def passed = total - failed - skipped
-//        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-//
-//        if (failed == 0) {
-//            currentBuild.result = 'SUCCESS'
-//        }
-//    }
-//    return testStatus
-//}
-
-
+def notify(status) {
+    slackSend channel: "#jenkinsbuilds",
+            color: '#2eb886',
+            message: "${status}",
+            testStatuses(),
+            tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
+            token: 'umkdE5giXctXeuyJD0c4PQao'
+}
 
 def trigg(String branchName) {
     if (branchName.equals('main')) {
@@ -80,25 +80,9 @@ pipeline {
             steps {
                 script {
                     if (branchName.equals("master")) {
-
-                        AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                        if (testResultAction != null) {
-                            def total = testResultAction.totalCount
-                            def failed = testResultAction.failCount
-                            def skipped = testResultAction.skipCount
-                            def passed = total - failed - skipped
-                            testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-                            slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-                            if (failed == 0) {
-                                currentBuild.result = 'SUCCESS'
-                                slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-                            }
-                        }
-
-
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
-                    //    slackSend testStatuses()
+                        slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
 
@@ -124,7 +108,7 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
-               // slackSend testStatuses()
+                slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
 //                    publishHTML([allowMissing         : false,
 //                                 alwaysLinkToLastBuild: true,
@@ -148,10 +132,9 @@ pipeline {
                         def skipped = testResultAction.skipCount
                         def passed = total - failed - skipped
                         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-                        slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
+
                         if (failed == 0) {
                             currentBuild.result = 'SUCCESS'
-                            slackSend  "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
                         }
                     }
 
