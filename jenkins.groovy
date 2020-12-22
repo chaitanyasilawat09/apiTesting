@@ -11,17 +11,20 @@ def Ip4_1Address = "172.18.1.65"
 def testStatuses() {
     def testStatus = ""
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-   // if (testResultAction != null) {
+    if (testResultAction != null) {
         def total = testResultAction.totalCount
         def failed = testResultAction.failCount
         def skipped = testResultAction.skipCount
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-
+slackSend color: "#FF0000",testStatus
         if (failed == 0) {
             currentBuild.result = 'SUCCESS'
         }
-  //  }
+    }
+    else {
+        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty "
+    }
     return testStatus
 }
 
@@ -123,6 +126,7 @@ pipeline {
 //                    if (testResult1 != null) {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
+
 
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
