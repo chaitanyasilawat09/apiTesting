@@ -27,7 +27,7 @@ def testStatuses() {
     }
     return testStatus
 }
-
+def test = testStatuses()
 def notify(status) {
     slackSend channel: "#jenkinsbuilds",
             color: '#2eb886',
@@ -105,6 +105,7 @@ pipeline {
                     }
                 }
             }
+            notify(".............12343456......... "+test)
         }
     }
     post {
@@ -127,10 +128,10 @@ pipeline {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
 
-                    slackSend color: "#FF0000", message: " AbstractTestResultAction result is 12343empty "+ testStatuses()"......."
+                    slackSend color: "#FF0000", message: " AbstractTestResultAction result is 12343empty ,,,test.....  "+ test"......."
 
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
-                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
+                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
 
             }
