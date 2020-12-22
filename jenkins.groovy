@@ -11,7 +11,10 @@ def notify(status) {
              token: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
-
+AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+if (testResult1 != null) {
+    slackSend "Tests123456: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
+}
 
 def trigg(String branchName) {
     if (branchName.equals('main')) {
@@ -58,6 +61,8 @@ pipeline {
         stage('Build') {  // Compile and do unit testing
             steps {
                 script {
+                    slackSend "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
+
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
@@ -96,10 +101,10 @@ pipeline {
 //                                 reportTitles         : ''])
 
 
-                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                    if (testResult1 != null) {
-                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
-                    }
+//                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+//                    if (testResult1 != null) {
+//                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
+//                    }
 
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
