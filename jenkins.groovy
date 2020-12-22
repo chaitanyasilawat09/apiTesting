@@ -7,7 +7,7 @@ def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
 
-
+@NonCPS
 def testStatuses() {
     def testStatus = ""
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
@@ -17,7 +17,7 @@ def testStatuses() {
         def skipped = testResultAction.skipCount
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-println testStatus
+println testStatus+"....println"
 //slackSend color: "#FF0000",testStatus
         if (failed == 0) {
             currentBuild.result = 'SUCCESS'
