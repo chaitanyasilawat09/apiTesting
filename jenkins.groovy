@@ -1,10 +1,14 @@
 def branchName = env.BRANCH_NAME
+def summary = junit testResults: '/build/reports/tests/runTests/*-reports/TEST-*.xml'
+
+
 
 def notify(status) {
      slackSend channel: "#jenkinsbuilds",
              color: '#2eb886',
-             message: "${status}",
-             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
+             //message: "${status}",
+             message: "\n *Test Summary* - ${summary.totalCount}, Failures: ${summary.failCount}, Skipped: ${summary.skipCount}, Passed: ${summary.passCount}",
+    tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
              token: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
