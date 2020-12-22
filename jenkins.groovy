@@ -11,11 +11,6 @@ def notify(status) {
              token: 'umkdE5giXctXeuyJD0c4PQao'
 }
 
-AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-if (testResult1 != null) {
-    slackSend "Tests123456: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
-}
-
 def trigg(String branchName) {
     if (branchName.equals('main')) {
         return '5 5 * * *'
@@ -63,6 +58,10 @@ pipeline {
         stage('Build') {  // Compile and do unit testing
             steps {
                 script {
+                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+                    if (testResult1 != null) {
+                        slackSend "Tests123456: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
+                    }
                     slackSend "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 
                     if (branchName.equals("master")) {
