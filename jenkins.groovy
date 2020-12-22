@@ -133,7 +133,7 @@ pipeline {
 //                    if (testResult1 != null) {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
-
+                    slackUploadFile channel: '#jenkinsbuilds', credentialId: '18db1418-2827-47bb-ad80-2b93b703cd72', filePath: 'build/reports/tests/runTests/junitreports/*xml'
                     //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
                     slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
                     slackSend color: "#FF0000", message: " post is final call,,,test....${test}.  "
