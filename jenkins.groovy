@@ -85,6 +85,7 @@ pipeline {
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
+                        notify(".............12343456......... "+test)
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
@@ -94,24 +95,26 @@ pipeline {
                         if (branchName.equals("main")) {
                                 notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
+                            notify(".............12343456......... "+test)
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTests"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
                             notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
+                            notify(".............12343456......... "+test)
                             sh "gradle clean runTests"
                         }
                     }
                 }
             }
-            notify(".............12343456......... "+test)
         }
     }
     post {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
+                notify(".............12343456......... "+test)
                // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
                     publishHTML([allowMissing         : false,
@@ -129,7 +132,7 @@ pipeline {
 //                    }
 
                     slackSend color: "#FF0000", message: " AbstractTestResultAction result is 12343empty ,,,test.....  "+ test"......."
-
+                    notify(".............12343456......... "+test)
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
