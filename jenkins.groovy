@@ -6,28 +6,28 @@ def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
 
 @NonCPS
-def getTestSummary = { ->
-    def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    def summary = ""
-
+def getTestStatuses(currentBuild) {
+    final AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null) {
-        def total = testResultAction.getTotalCount()
-        def failed = testResultAction.getFailCount()
-        def skipped = testResultAction.getSkipCount()
-
-        summary = "Test results:\n\t"
-        summary = summary + ("Passed: " + (total - failed - skipped))
-        summary = summary + (", Failed: " + failed)
-        summary = summary + (", Skipped: " + skipped)
-    } else {
-        summary = "No tests found"
+        this.total = testResultAction.totalCount
+        this.failed = testResultAction.failCount
+        this.skipped = testResultAction.skipCount
+        this.passed = total - failed - skipped
     }
-    return summary
 }
 
-
-def testSummary = getTestSummary()
-
+def buildUnitTestSlackNotificationMessage() {
+    final JSONObject unitTestResult = new JSONObject()
+    unitTestResult.put("fallback", this.jenkinsEnvironment.JOB_NAME + "with build#" + this.jenkinsEnvironment.BUILD_NUMBER + "finish with unit test result : Passed: " + this.passed + " | Failed: " + this.failed + " | Skipped: " + this.skipped )
+    unitTestResult.put("color", this.getUnitTestReportColor())
+    unitTestResult.put("pretext", "Message from CI job: " + this.jenkinsEnvironment.JOB_NAME + "#" + this.jenkinsEnvironment.BUILD_NUMBER)
+    unitTestResult.put("title", "BuildLog")
+    unitTestResult.put("title_link", "<<<JenkinsHost>>>" + this.jenkinsEnvironment.JOB_NAME + "/" + this.jenkinsEnvironment.BUILD_NUMBER  + "/console")
+    unitTestResult.put("text", "Passed: " + this.passed +  " | Failed: " + this.failed + " | Skipped: " + this.skipped)
+    unitTestResult.put("image_url", this.getLogoURL())
+    this.attachments.add(unitTestResult)
+    return this.attachments.toString()
+}
 
 
 @NonCPS
@@ -55,7 +55,7 @@ def notify(status) {
     slackSend channel: "#jenkinsbuilds",
             color: '#2eb886',
             message: "${status}",
-            mess: "${test}",
+            attachments: " ",
             tokenCredentialId: 'umkdE5giXctXeuyJD0c4PQao',
             token: 'umkdE5giXctXeuyJD0c4PQao'
 }
@@ -110,7 +110,29 @@ pipeline {
                         slackSend color: "#FF0000", message: " Build Started...:- "
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        sh "gradle clean runTests"
+
+
+
+                        def slackHelper = new com.xyz.jenkins.libraries.SlackNotifier(env)
+                        try {
+                            sh "gradle clean runTests"
+                        } finally {
+                           // junit 'build/test-results/test/*.xml'
+                            junit 'build/reports/tests/runTests/junitreports/*.xml'
+                            AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+
+                            slackHelper.getTestStatuses(currentBuild)
+
+                            slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
+                            slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+slackHelper.buildUnitTestSlackNotificationMessage()
+                            slackSend( attachments: slackHelper.buildUnitTestSlackNotificationMessage())
+                        }
+
+
+
+
+
+
 
                     } else {
 
@@ -126,6 +148,8 @@ pipeline {
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
                             sh "gradle clean runTests"
+
+
                         }
                     }
                 }
@@ -136,7 +160,6 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
             script {
-                slackSend  message: "${test}"
                // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
                     publishHTML([allowMissing         : false,
@@ -154,9 +177,7 @@ pipeline {
 //                    }
 
                     //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
-                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().length()
-                    slackSend color: "#FF0000", message: " post is 1testSummary,,test.....  "+ testSummary
-                    slackSend  message: "${testSummary}>>>>>>>>>>>>>>>>0"
+                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
