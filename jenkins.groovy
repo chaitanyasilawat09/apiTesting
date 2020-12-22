@@ -11,7 +11,7 @@ def Ip4_1Address = "172.18.1.65"
 def testStatuses() {
     def testStatus = ""
     AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    if (testResultAction != null) {
+//    if (testResultAction != null) {
         def total = testResultAction.totalCount
         def failed = testResultAction.failCount
         def skipped = testResultAction.skipCount
@@ -22,7 +22,7 @@ println testStatus+"....println"
         if (failed == 0) {
             currentBuild.result = 'SUCCESS'
         }
-    }
+   // }
     else {
         slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty "+ testStatus.isEmpty()+"......."
     }
