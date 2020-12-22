@@ -91,7 +91,7 @@ pipeline {
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
-                        slackSend color: "#FF0000", message: " post is final call in master branch sh ,,,test.....  "+ ${test}
+                        slackSend color: "#FF0000", message: " post is final call in master branch sh ,,,test...${test}..  "
                     } else {
 
                         if (branchName.equals("main")) {
@@ -100,12 +100,14 @@ pipeline {
 
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
                             sh "gradle clean runTests"
+                            slackSend color: "#FF0000", message: " post is final call in master branch sh ,,,test...${test}..  "
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
                             notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
                             sh "gradle clean runTests"
+                            slackSend color: "#FF0000", message: " post is final call in master branch sh ,,,test...${test}..  "
                         }
                     }
                 }
@@ -134,7 +136,7 @@ pipeline {
 
                     //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
                     slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
-                    slackSend color: "#FF0000", message: " post is final call,,,test.....  "+ ${test}
+                    slackSend color: "#FF0000", message: " post is final call,,,test....${test}.  "
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
