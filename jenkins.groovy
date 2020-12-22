@@ -124,20 +124,6 @@ pipeline {
 //                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
 //                    }
 
-
-                    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                    if (testResultAction != null) {
-                        def total = testResultAction.totalCount
-                        def failed = testResultAction.failCount
-                        def skipped = testResultAction.skipCount
-                        def passed = total - failed - skipped
-                        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-
-                        if (failed == 0) {
-                            currentBuild.result = 'SUCCESS'
-                        }
-                    }
-
                       slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
                       notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}")
                 }
