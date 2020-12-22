@@ -14,9 +14,15 @@ def testStatuses() {
     def testStatus = ""
     def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     if (testResultAction != null) {
+//        def total = testResultAction.totalCount
+//        def failed = testResultAction.failCount
+//        def skipped = testResultAction.skipCount
+
         def total = testResultAction.getTotalCount()
         def failed = testResultAction.getFailCount()
         def skipped = testResultAction.getSkipCount()
+
+
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
         //slackSend color: "#FF0000",testStatus
@@ -85,51 +91,63 @@ pipeline {
             steps {
                 script {
                     step $class: 'JUnitResultArchiver', testResults: '**/TEST-*.xml'
-                   // if (branchName.equals("master")) {
+                    if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
                         sh "gradle clean runTests"
-                     slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
-                    slackSend color: "#FF0000", message: " post is final call,,,test....${test}.  "
-                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
-                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
+                        slackSend color: "#FF0000", message: " post is final call in master branch sh ,,,test..... ${test}"
+                    } else {
 
-              //      }
+                        if (branchName.equals("main")) {
+                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
+                            slackSend color: "#FF0000", message: " Build Started...:- "
+
+//                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
+                            sh "gradle clean runTests"
+                        } else {
+//                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
+                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
+                            slackSend color: "#FF0000", message: " Build Started...:- "
+
+                            sh "gradle clean runTests"
+                        }
+                    }
                 }
             }
         }
     }
-//    post {
-//        always {
-//            step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
-//            script {
-//               // slackSend testStatuses()
-//                if (branchName.equals("master") || branchName.equals("main")) {
-//                    publishHTML([allowMissing         : false,
-//                                 alwaysLinkToLastBuild: true,
-//                                 keepAll              : false,
-//                                 reportDir            : 'build/reports/tests/runTestsParallel/',
-//                                 reportFiles          : 'index.html',
-//                                 reportName           : 'HTML Report',
-//                                 reportTitles         : ''])
-//
-//
-////                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-////                    if (testResult1 != null) {
-////                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
-////                    }
-//                    //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
-//                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
-//                    slackSend color: "#FF0000", message: " post is final call,,,test....${test}.  "
-//                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
-//                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
-//                }
-//
-//
-//            }
-//            cleanWs notFailBuild: true
-//        }
-//    }
+    post {
+        always {
+            step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTestsParallel/testng-results.xml'])
+            script {
+               // slackSend testStatuses()
+                if (branchName.equals("master") || branchName.equals("main")) {
+                    publishHTML([allowMissing         : false,
+                                 alwaysLinkToLastBuild: true,
+                                 keepAll              : false,
+                                 reportDir            : 'build/reports/tests/runTestsParallel/',
+                                 reportFiles          : 'index.html',
+                                 reportName           : 'HTML Report',
+                                 reportTitles         : ''])
+
+
+//                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+//                    if (testResult1 != null) {
+//                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
+//                    }
+
+                    //slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
+                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses()
+                    slackSend color: "#FF0000", message: " post is final call,,,test....${test}.  "
+                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
+                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
+                }
+
+
+            }
+            cleanWs notFailBuild: true
+        }
+    }
 }
