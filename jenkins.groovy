@@ -23,7 +23,7 @@ def testStatuses() {
         }
     }
     else {
-        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty "+ testStatus+"......."
+        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty "+ testStatus.isEmpty()+"......."
     }
     return testStatus
 }
