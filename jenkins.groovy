@@ -72,14 +72,6 @@ pipeline {
                     if (branchName.equals("master")) {
 //                         sh "chmod +x ./shFile/setups77.sh"
 //                         sh "./shFile/setups77.sh"
-                    } else {
-                        if (branchName.equals("main")) {
-//                             sh "chmod +x ./shFile/setups65restore.sh"
-//                             sh "./shFile/setups65restore.sh"
-                        } else {
-//                             sh "chmod +x ./shFile/setups182.sh"
-                            //sh "./shFile/setups182.sh"
-                        }
                     }
                 }
             }
@@ -88,8 +80,7 @@ pipeline {
             steps {
                 script {
 
-
-                    if (branchName.equals("master")) {
+                 //   if (branchName.equals("master")) {
 
                         withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
                         echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
@@ -102,60 +93,61 @@ pipeline {
                         set +x
                         sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                         echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
-                    }} else {
-
-                        if (branchName.equals("main")) {
-                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
-                            slackSend color: "#FF0000", message: " Build Started...:- "
-
-//                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
-                            set +x
-                            sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
-                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
-                        } else {
-//                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
-                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
-                            slackSend color: "#FF0000", message: " Build Started...:- "
-                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
-                            set +x
-                            sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
-                        }
                     }
-                }
-            }
-        }
-    }
-    post {
-        always {
-            step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTests/testng-results.xml'])
-            script {
-                slackSend  message: "${test}"
-               // slackSend testStatuses()
-                if (branchName.equals("master") || branchName.equals("main")) {
-//                    publishHTML([allowMissing         : false,
-//                                 alwaysLinkToLastBuild: true,
-//                                 keepAll              : false,
-//                                 reportDir            : 'build/reports/tests/runTests/',
-//                                 reportFiles          : 'index.html',
-//                                 reportName           : 'HTML Report',
-//                                 reportTitles         : ''])
-
-
-//                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-//                    if (testResult1 != null) {
-//                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
+//                    else {
+//
+//                        if (branchName.equals("main")) {
+//                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
+//                            slackSend color: "#FF0000", message: " Build Started...:- "
+//
+////                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
+//                            set +x
+//                            sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
+//                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+//                        } else {
+////                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
+//                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
+//                            slackSend color: "#FF0000", message: " Build Started...:- "
+//                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+//                            set +x
+//                            sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
+//                        }
 //                    }
-
-               //     slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
-                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
-                    slackSend  message: "${test}"
-                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
-                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
-
-
             }
-            cleanWs notFailBuild: true
         }
     }
+//    post {
+//        always {
+//            step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTests/testng-results.xml'])
+//            script {
+//              //  slackSend  message: "${test}"
+//               // slackSend testStatuses()
+//                if (branchName.equals("master") || branchName.equals("main")) {
+////                    publishHTML([allowMissing         : false,
+////                                 alwaysLinkToLastBuild: true,
+////                                 keepAll              : false,
+////                                 reportDir            : 'build/reports/tests/runTests/',
+////                                 reportFiles          : 'index.html',
+////                                 reportName           : 'HTML Report',
+////                                 reportTitles         : ''])
+//
+//
+////                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+////                    if (testResult1 != null) {
+////                        echo "Tests1234: ${testResult1.failCount} / ${testResult1.failureDiffString} failures of ${testResult1.totalCount}.\n\n"
+////                    }
+//
+//               //     slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
+////                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
+////                    slackSend  message: "${test}"
+////                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
+////                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
+//                }
+//
+//
+//            }
+//            cleanWs notFailBuild: true
+//        }
+//    }
 }
