@@ -5,9 +5,7 @@ def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
-environment {
-    AWS_ACCESS_KEY_ID     = credentials('aws-key')
-}
+
 
 @NonCPS
 def testStatuses() {
@@ -51,7 +49,9 @@ def trigg(String branchName) {
 
 pipeline {
     agent any
-
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('aws-key')
+    }
     options {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(daysToKeepStr: '20', artifactNumToKeepStr: '20'))
