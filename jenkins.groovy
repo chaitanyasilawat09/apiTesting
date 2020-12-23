@@ -2,7 +2,7 @@ node {
     withCredentials([usernamePassword(credentialsId: '324126f7-a49b-44e2-9f12-5bd263b94b2c', passwordVariable: 'password', usernameVariable: 'username'), string(credentialsId: '77ec7fdb-85db-423b-bd75-43c7a47f1354', variable: 'slacktocken')])
                             {
                                 echo "//////////////////"
-                                sh "echo${slacktocken}"
+                             sh print("${slacktocken}")
                                 echo "................"
                                 sh """
 
