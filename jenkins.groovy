@@ -121,13 +121,13 @@ pipeline {
                 slackSend  message: "${test}"
                // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
-                    publishHTML([allowMissing         : false,
-                                 alwaysLinkToLastBuild: true,
-                                 keepAll              : false,
-                                 reportDir            : 'build/reports/tests/runTests/',
-                                 reportFiles          : 'index.html',
-                                 reportName           : 'HTML Report',
-                                 reportTitles         : ''])
+//                    publishHTML([allowMissing         : false,
+//                                 alwaysLinkToLastBuild: true,
+//                                 keepAll              : false,
+//                                 reportDir            : 'build/reports/tests/runTests/',
+//                                 reportFiles          : 'index.html',
+//                                 reportName           : 'HTML Report',
+//                                 reportTitles         : ''])
 
 
 //                    AbstractTestResultAction testResult1 =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
