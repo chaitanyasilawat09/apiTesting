@@ -1,4 +1,4 @@
-//#!groovy
+#!groovy
 import hudson.tasks.test.AbstractTestResultAction
 
 
@@ -47,7 +47,7 @@ def trigg(String branchName) {
     }
 }
 
-node {
+pipeline {
     agent any
 
     environment {
