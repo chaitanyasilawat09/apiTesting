@@ -88,40 +88,39 @@ pipeline {
             steps {
                 script {
 
-                    withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')])
-                            {
-                    sh ''
-                    set + x
 
-                    echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
                     if (branchName.equals("master")) {
-                        notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}")
+
+                        withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
+                        echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+
+
+                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
-                        // slackSend testStatuses()
+                       // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        set + x
+                        set +x
                         sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
-                        echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
-                    } else {
+                        echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+                    }} else {
 
                         if (branchName.equals("main")) {
-                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
+                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
-                            set + x
+                            set +x
                             sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
-                            echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
+                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
                             notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
-                            echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
-                            set + x
+                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+                            set +x
                             sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                         }
                     }
-                }
                 }
             }
         }
@@ -130,7 +129,7 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTests/testng-results.xml'])
             script {
-              //  slackSend  message: "${test}"
+                slackSend  message: "${test}"
                // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
 //                    publishHTML([allowMissing         : false,
@@ -148,10 +147,10 @@ pipeline {
 //                    }
 
                //     slackSend color: "#FF0000", message: " AbstractTestResultAction result  in post is 12343empty ,,,test.....  "+ test.isEmpty()"......."
-//                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
-//                    slackSend  message: "${test}"
-//                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
-//                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
+                    slackSend color: "#FF0000", message: " post is 12343empty ,,,test.....  "+ testStatuses().toString()
+                    slackSend  message: "${test}"
+                      slackSend color: "#FF0000", message: " Build completed and  result:- ${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ......${currentBuild.result}.==============${env.currentResult}"
+                      notify("${env.JOB_NAME}/${env.BUILD_NUMBER} ...build...  + ${currentBuild.result}.................."+test)
                 }
 
 
