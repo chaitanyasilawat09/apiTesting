@@ -88,10 +88,9 @@ pipeline {
                     echo "${username}"+"....1....AWS_ACCESS_KEY_ID"
                     echo "${password}"+"...1.....AWS_ACCESS_KEY_ID"
                         // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
-                        slackSend color: "#FF0000", message: " Build Started...:- "
-                       // slackSend testStatuses()
+                      //  slackSend color: "#FF0000", message: " Build Started...:- "
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        set +x
+
                         sh "gradle clean test -Pawskey=\"${username}\""
                         echo "${username}"+"....2....AWS_ACCESS_KEY_ID"
                         echo "${password}"+"...2.....AWS_ACCESS_KEY_ID"
