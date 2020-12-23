@@ -83,7 +83,7 @@ pipeline {
                  //   if (branchName.equals("master")) {
 
                        // withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
-                    withCredentials([usernamePassword(credentialsId: '4d5619f1-d72f-4b33-ad57-cba0b1d84646', passwordVariable: 'password', usernameVariable: 'username'), string(credentialsId: '1be22863-960d-43c5-b52f-df6ad36b1e33', variable: 'slacktocken')])
+                    withCredentials([usernamePassword(credentialsId: '324126f7-a49b-44e2-9f12-5bd263b94b2c', passwordVariable: 'password', usernameVariable: 'username'), string(credentialsId: '77ec7fdb-85db-423b-bd75-43c7a47f1354', variable: 'slacktocken')])
                             {// some block
                     echo "${slacktocken}"+"....1....slacktocken........."
                     echo "${username}"+"....1....AWS_ACCESS_KEY_ID"
