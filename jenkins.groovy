@@ -50,9 +50,9 @@ def trigg(String branchName) {
 pipeline {
     agent any
 
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('aws-key')
-    }
+//    environment {
+//        AWS_ACCESS_KEY_ID     = credentials('aws-key')
+//    }
 
     options {
         disableConcurrentBuilds()
@@ -87,6 +87,13 @@ pipeline {
         stage('Build') {  // Compile and do unit testing
             steps {
                 script {
+
+                    withCredentials([
+                            string(
+                                    credentialsId: 'aws-key',
+                                    variable: 'AWS_ACCESS_KEY_IDE')
+                    ])
+
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
