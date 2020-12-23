@@ -6,6 +6,7 @@ public class AbcTests {
     public void test_1()
     {
         System.out.println("hello");
+        System.out.println(System.getProperty("awskey")+"......aws key is this");
 //                given().
 //                get("https://reqres.in/api/users?page=2").
 //                then().
