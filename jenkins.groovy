@@ -48,7 +48,7 @@ def trigg(String branchName) {
 
 pipeline {
     agent any
-    AWS_ACCESS_KEY_ID     = env.credentials('aws-key')
+   def AWS_ACCESS_KEY_ID     = env.credentials('aws-key')
 
     options {
         disableConcurrentBuilds()
