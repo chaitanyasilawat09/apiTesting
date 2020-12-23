@@ -51,7 +51,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID     = env.credentials('aws-key')
+        AWS_ACCESS_KEY_ID     = credentials('aws-key')
     }
 
     options {
