@@ -89,12 +89,16 @@ pipeline {
                 script {
 
                     withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')])
+                    sh ''
+                    set +x
+
                     echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
                     if (branchName.equals("master")) {
                          notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                         slackSend color: "#FF0000", message: " Build Started...:- "
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
+                        set +x
                         sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                         echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
                     } else {
@@ -104,6 +108,7 @@ pipeline {
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
+                            set +x
                             sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                             echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
                         } else {
@@ -111,6 +116,7 @@ pipeline {
                             notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
                             echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+                            set +x
                             sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                         }
                     }
@@ -122,7 +128,6 @@ pipeline {
         always {
             step([$class: 'Publisher', reportFilenamePattern: 'build/reports/tests/runTests/testng-results.xml'])
             script {
-                echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
                 slackSend  message: "${test}"
                // slackSend testStatuses()
                 if (branchName.equals("master") || branchName.equals("main")) {
