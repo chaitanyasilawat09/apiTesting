@@ -5,7 +5,7 @@ def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
-
+AWS_ACCESS_KEY_ID     = env.credentials('aws-key')
 
 @NonCPS
 def testStatuses() {
@@ -88,7 +88,7 @@ pipeline {
                         slackSend color: "#FF0000", message: " Build Started...:- "
                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        sh "gradle clean runTests"
+                        sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
 
                     } else {
 
@@ -97,13 +97,13 @@ pipeline {
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
-                            sh "gradle clean runTests"
+                            sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
                             notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
-                            sh "gradle clean runTests"
+                            sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                         }
                     }
                 }
