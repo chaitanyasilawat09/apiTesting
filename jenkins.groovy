@@ -79,12 +79,7 @@ pipeline {
         stage('Build') {  // Compile and do unit testing
             steps {
                 script {
-                    environment {
-                    AWS_ACCESS_KEY_ID     = credentials('77ec7fdb-85db-423b-bd75-43c7a47f1354')
-                    AWS_SECRET_ACCESS_KEY = credentials('324126f7-a49b-44e2-9f12-5bd263b94b2c')
-                }
-                    echo "${AWS_ACCESS_KEY_ID}"+"....1....AWS_ACCESS_KEY_IDAWS_SECRET_ACCESS_KEYAWS_SECRET_ACCESS_KEY"
-                    echo "${AWS_SECRET_ACCESS_KEY}"+"...1.....AWS_SECRET_ACCESS_KEY    AWS_SECRET_ACCESS_KEY"
+
                  //   if (branchName.equals("master")) {
 
                        // withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
