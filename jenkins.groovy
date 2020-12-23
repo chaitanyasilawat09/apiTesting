@@ -91,7 +91,7 @@ pipeline {
                       //  slackSend color: "#FF0000", message: " Build Started...:- "
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
 
-                        sh "gradle clean test -Pawskey=\"${username}\""
+                        sh 'gradle clean test -Dawskey=\"${username}\"'
                         echo "${username}"+"....2....AWS_ACCESS_KEY_ID"
                         echo "${password}"+"...2.....AWS_ACCESS_KEY_ID"
                     }
