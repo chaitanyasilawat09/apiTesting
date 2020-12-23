@@ -83,7 +83,7 @@ pipeline {
                  //   if (branchName.equals("master")) {
 
                        // withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
-                    withCredentials([usernamePassword(credentialsId: 'userpass', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]){
+                    withCredentials([usernamePassword(credentialsId: 'a1de3395-403d-4e5a-95d7-ea6647d17a9e', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]){
 
                     echo "${USER}"+"........AWS_ACCESS_KEY_ID"
                     echo "${PASSWORD}"+"........AWS_ACCESS_KEY_ID"
