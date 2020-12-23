@@ -84,10 +84,14 @@ pipeline {
 
                        // withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
                     withCredentials([usernamePassword(credentialsId: '324126f7-a49b-44e2-9f12-5bd263b94b2c', passwordVariable: 'password', usernameVariable: 'username'), string(credentialsId: '77ec7fdb-85db-423b-bd75-43c7a47f1354', variable: 'slacktocken')])
-                            {// some block
-                    echo """${slacktocken}"+"....1....slacktocken........."""
+                            {
+                                sh """
+
+
+                    echo "${slacktocken}"+"....1....slacktocken........."
                     echo "${username}"+"....1....AWS_ACCESS_KEY_ID"
                     echo "${password}"+"...1.....AWS_ACCESS_KEY_ID"
+"""
                         // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                       //  slackSend color: "#FF0000", message: " Build Started...:- "
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
