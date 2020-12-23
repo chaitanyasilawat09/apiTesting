@@ -83,15 +83,17 @@ pipeline {
                  //   if (branchName.equals("master")) {
 
                        // withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
-                    withCredentials([usernamePassword(credentialsId: '18c7eb2c-9da0-4d62-8739-992642333b7b', passwordVariable: 'password', usernameVariable: 'username')]) {
-                        // some block
+                    withCredentials([usernamePassword(credentialsId: '18c7eb2c-9da0-4d62-8739-992642333b7b', passwordVariable: 'password', usernameVariable: 'username'), string(credentialsId: '1be22863-960d-43c5-b52f-df6ad36b1e33', variable: 'slacktocken')])
+                            {// some block
+                    echo "${slacktocken}"+"....1....slacktocken........."
                     echo "${username}"+"....1....AWS_ACCESS_KEY_ID"
                     echo "${password}"+"...1.....AWS_ACCESS_KEY_ID"
                         // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
                       //  slackSend color: "#FF0000", message: " Build Started...:- "
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
 
-                        sh 'gradle clean test -Dawskey=\"${username}\"'
+                        sh 'gradle clean test -Dawskey=\"${username}\" -Dslacktocken=\"${slacktocken}\"'
+                                println("${slacktocken}"+"....2...slacktocken.........")
                         echo "${username}"+"....2....AWS_ACCESS_KEY_ID"
                         echo "${password}"+"...2.....AWS_ACCESS_KEY_ID"
                     }

@@ -9,6 +9,7 @@ public class AbcTests {
         String abc = System.getProperty("awskey");
         System.out.println(abc+".........abc is ");
         System.out.println(System.getProperty("awskey")+"......aws key is this");
+        System.out.println(System.getProperty("slacktocken")+"......slacktocken key is this");
 //                given().
 //                get("https://reqres.in/api/users?page=2").
 //                then().
