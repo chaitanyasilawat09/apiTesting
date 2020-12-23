@@ -89,37 +89,39 @@ pipeline {
                 script {
 
                     withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')])
+                            {
                     sh ''
-                    set +x
+                    set + x
 
-                    echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+                    echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
                     if (branchName.equals("master")) {
-                         notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
+                        notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}")
                         slackSend color: "#FF0000", message: " Build Started...:- "
-                       // slackSend testStatuses()
+                        // slackSend testStatuses()
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
-                        set +x
+                        set + x
                         sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
-                        echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+                        echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
                     } else {
 
                         if (branchName.equals("main")) {
-                                notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
+                            notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
 
 //                            sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_0Address}\""
-                            set +x
+                            set + x
                             sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
-                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
+                            echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
                         } else {
 //                             sh "gradle clean runTestsParallel -PbaseUrl=\"${branchIpAddress}\""
                             notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL} ")
                             slackSend color: "#FF0000", message: " Build Started...:- "
-                            echo "${AWS_ACCESS_KEY_ID}"+"........AWS_ACCESS_KEY_ID"
-                            set +x
+                            echo "${AWS_ACCESS_KEY_ID}" + "........AWS_ACCESS_KEY_ID"
+                            set + x
                             sh "gradle clean runTests -Pawskey=\"${AWS_ACCESS_KEY_ID}\""
                         }
                     }
+                }
                 }
             }
         }
