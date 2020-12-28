@@ -17,18 +17,19 @@ def testStatuses() {
         def skipped = testResultAction.skipCount
         def passed = total - failed - skipped
         testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-println testStatus+"....println"
+        println testStatus + "....println"
 //slackSend color: "#FF0000",testStatus
         if (failed == 0) {
             currentBuild.result = 'SUCCESS'
         }
-    }
-    else {
-        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty "+ testStatus.isEmpty()+"......."
+    } else {
+        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty " + testStatus.isEmpty() + "......."
     }
     return testStatus
 }
+
 def test = testStatuses()
+
 def notify(status) {
     slackSend channel: "#jenkinsbuilds",
             color: '#2eb886',
@@ -80,23 +81,23 @@ pipeline {
             steps {
                 script {
 
-                 //   if (branchName.equals("master")) {
+                    //   if (branchName.equals("master")) {
 
-                       // withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
+                    // withCredentials([string(credentialsId: 'aws-key', variable: 'AWS_ACCESS_KEY_ID')]) {
                     withCredentials([usernamePassword(credentialsId: '324126f7-a49b-44e2-9f12-5bd263b94b2c', passwordVariable: 'password', usernameVariable: 'username'), string(credentialsId: '77ec7fdb-85db-423b-bd75-43c7a47f1354', variable: 'slacktocken')])
                             {// some block
-                    echo """${slacktocken}"+"....1....slacktocken........."""
-                    echo "${username}"+"....1....AWS_ACCESS_KEY_ID"
-                    echo "${password}"+"...1.....AWS_ACCESS_KEY_ID"
-                        // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
-                      //  slackSend color: "#FF0000", message: " Build Started...:- "
+                                echo """${slacktocken}"+"....1....slacktocken........."""
+                                echo "${username}" + "....1....AWS_ACCESS_KEY_ID"
+                                echo "${password}" + "...1.....AWS_ACCESS_KEY_ID"
+                                // notify("${env.JOB_NAME}/${env.BUILD_NUMBER} build started /${env.Build_URL}" )
+                                //  slackSend color: "#FF0000", message: " Build Started...:- "
 //                         sh "gradle clean runTestsParallel -PbaseUrl=\"${Ip4_1Address}\""
 
-                        sh 'gradle clean test -Dawskey=\"${username}\" -Dslacktocken=\"${slacktocken}\"'
-                                println("${slacktocken}"+"....2...slacktocken.........")
-                        echo "${username}"+"....2....AWS_ACCESS_KEY_ID"
-                        echo "${password}"+"...2.....AWS_ACCESS_KEY_ID"
-                    }
+                                sh 'gradle clean test -Dawskey=\"${username}\" -Dslacktocken=\"${slacktocken}\"'
+                                println("${slacktocken}" + "....2...slacktocken.........")
+                                echo "${username}" + "....2....AWS_ACCESS_KEY_ID"
+                                echo "${password}" + "...2.....AWS_ACCESS_KEY_ID"
+                            }
 //                    else {
 //
 //                        if (branchName.equals("main")) {
