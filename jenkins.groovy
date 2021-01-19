@@ -63,9 +63,9 @@ pipeline {
         gradle 'default'
     }
 
-    triggers {
-        cron(trigg(branchName))
-    }
+//    triggers {
+//        cron(trigg(branchName))
+//    }
     stages {
         stage('Configure') {  // build the box
             steps {
