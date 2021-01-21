@@ -1,7 +1,7 @@
 public class Java11_Var_Variable {
 
 
-    public Integer test12(int a,int b){
+    public int test12(int a,int b){
 
         return a*b;
     }

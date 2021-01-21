@@ -28,7 +28,7 @@ public class EmployeeSerializationDeserialization {
 
 
     @Test
-    public void getPojoFromEmployeeObject() throws JsonProcessingException
+    public void getPojoFromEmployeeObject() throws IOException
     {
         // Just create an object of Pojo class
         Employee employee = new Employee();

@@ -1,14 +1,13 @@
-import org.testng.annotations.Test;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+
 public class ParseNestedJsonObjectToReadValues {
 
     @Test
-    public void parseJsonObjectToReadValues() throws JsonMappingException, JsonProcessingException
-    {
+    public void parseJsonObjectToReadValues() throws IOException {
         String jsonObject = "{\r\n" +
                 "  \"firstName\": \"Amod\",\r\n" +
                 "  \"lastName\": \"Mahajan\",\r\n" +
