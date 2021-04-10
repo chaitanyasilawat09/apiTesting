@@ -70,6 +70,13 @@ public class EmployeeSerializationDeserialization {
         ObjectMapper objectMapper = new ObjectMapper();
         String userDir = System.getProperty("user.dir");
         File outputJsonFile = new File(userDir+"/files/Employees.json");
+        //Write value in JSON file
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputJsonFile, employee);
+
+        // read value from JSOM file
+        Employee emp = objectMapper.readValue(outputJsonFile,Employee.class);
+        String employeeJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(emp);
+
+        System.out.println(employeeJson);
     }
 }
