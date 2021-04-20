@@ -5,7 +5,7 @@ public class Java11_Var_Variable {
 
         return a*b;
     }
-    public static void main(String[] args) {
+    public void main(String[] args) {
         int i = 1;
 //        var a=11;
 //        var b = "test";

@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [
+    {
+      "token": "abc123"
+    }
+  ],
+  "required": [
+    "token"
+  ],
+  "properties": {
+    "token": {
+      "$id": "#/properties/token",
+      "type": "string",
+      "title": "The token schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        {
+          "id": 4,
+          "version": 1,
+          "type": "ipv4ByDirectionList",
+          "name": "awsIpv4WhiteListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 8,
+          "version": 1,
+          "type": "ipv4ByDirectionList",
+          "name": "azureIpv4WhiteListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 13,
+          "version": 1,
+          "type": "awsImageList",
+          "name": "awsImageBlackListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 10,
+          "version": 6,
+          "type": "awsImageList",
+          "name": "awsImageWhiteListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 1,
+          "version": 3,
+          "type": "protocolDetailList",
+          "name": "awsProtocolDetailWhiteListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 16,
+          "version": 3,
+          "type": "protocolDetailList",
+          "name": "awsProtocolDetailBlackListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 5,
+          "version": 1,
+          "type": "ipv6ByDirectionList",
+          "name": "azureIpv6BlackListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 7,
+          "version": 1,
+          "type": "ipv6ByDirectionList",
+          "name": "awsIpv6BlackListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 14,
+          "version": 1,
+          "type": "ipv6ByDirectionList",
+          "name": "awsIpv6WhiteListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 3,
+          "version": 2,
+          "type": "ipv4ByDirectionList",
+          "name": "azureIpv4BlackListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 12,
+          "version": 2,
+          "type": "azureImageList",
+          "name": "azureImageWhiteListDefault",
+          "value": "[\"/subscriptions/6d7bbae5-302c-44c3-b8e9-1880c74312f5/resourceGroups/RESOURCE-GROUP-QE/providers/Microsoft.Compute/virtualMachines/qe-vm1\"]"
+        },
+        {
+          "id": 9,
+          "version": 1,
+          "type": "ipv6ByDirectionList",
+          "name": "azureIpv6WhiteListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 6,
+          "version": 6,
+          "type": "ipv4ByDirectionList",
+          "name": "awsIpv4BlackListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 11,
+          "version": 1,
+          "type": "azureImageList",
+          "name": "azureImageBlackListDefault",
+          "value": "[]"
+        },
+        {
+          "id": 15,
+          "version": 2,
+          "type": "numeric",
+          "name": "limit100",
+          "value": "100"
+        },
+        {
+          "id": 2,
+          "version": 2,
+          "type": "protocolDetailList",
+          "name": "azureProtocolDetailBlackListDefault",
+          "value": "[]"
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}
+
