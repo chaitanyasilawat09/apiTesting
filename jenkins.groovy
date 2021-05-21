@@ -1,34 +1,8 @@
 #!groovy
-import hudson.tasks.test.AbstractTestResultAction
-
-
 def branchName = env.BRANCH_NAME
 def Ip4_0Address = "172.18.1.77"
 def branchIpAddress = "172.18.1.153"
 def Ip4_1Address = "172.18.1.65"
-
-@NonCPS
-def testStatuses() {
-    def testStatus = ""
-    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    if (testResultAction != null) {
-        def total = testResultAction.totalCount
-        def failed = testResultAction.failCount
-        def skipped = testResultAction.skipCount
-        def passed = total - failed - skipped
-        testStatus = "Test Status:\n  Passed: ${passed}, Failed: ${failed} ${testResultAction.failureDiffString}, Skipped: ${skipped}"
-        println testStatus + "....println"
-//slackSend color: "#FF0000",testStatus
-        if (failed == 0) {
-            currentBuild.result = 'SUCCESS'
-        }
-    } else {
-        slackSend color: "#FF0000", message: " AbstractTestResultAction result is empty " + testStatus.isEmpty() + "......."
-    }
-    return testStatus
-}
-
-def test = testStatuses()
 
 def notify(status) {
     slackSend channel: "#jenkinsbuilds",

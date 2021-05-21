@@ -5,14 +5,18 @@ public class Java11_Var_Variable {
 
         return a*b;
     }
-    public void main(String[] args) {
-        int i = 1;
-//        var a=11;
-//        var b = "test";
-//        var c = 'c';
-//        var d = true;
-//        var e = 1.0;
-        System.out.println(i);
+    public static void main(String[] args) {
+        //int i = 1;
+
+        String s ="test";
+        int [] i1= new int[]{Integer.parseInt(s)};
+        for (int j : i1){
+            System.out.println(j);
+        }
+       // System.out.println(i);
 
     }
+
+
+
 }
